@@ -1,0 +1,17 @@
+{
+	"samsung860":{
+			"URL": "https://item.jd.com/6287165.html",
+			"ExpectedPrice":329,
+			"Email":"1043096262@qq.com"
+	},
+	"toshibaQ200":{
+			"URL": "https://item.jd.com/1592448.html",
+			"ExpectedPrice":329,
+			"Email":"1043096262@qq.com"
+	},
+	"iphonexr128G":{
+			"URL": "https://item.jd.com/100000287115.html",
+			"ExpectedPrice":5888,
+			"Email":"1043096262@qq.com"
+	}
+}
