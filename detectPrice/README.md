@@ -32,3 +32,60 @@ link:
 9.sendmail 服务： https://www.cnblogs.com/luhouxiang/p/4758403.html
 
 
+10.git 本地和远程：（远程都要在github上建立，并不能直接从本地一开始建立远程并推送）
+a.
+…or create a new repository on the command line
+echo "# pythonDemo" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/ruozhiertong/pythonDemo.git
+git push -u origin master
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/ruozhiertong/pythonDemo.git
+git push -u origin master
+
+b.
+git clone
+
+
+11.linux/unix 
+	一般静态库 放在      /lib   /lib64   /usr/lib  				/usr/local/lib
+	一般程序动态库放在					   /usr/share				/usr/local/share
+	一般程序(可执行) 放在 /bin /sbin     /usr/bin  /usr/sbin 		/usr/local/bin /usr/local/sbin
+	一般程序源文件  放在     			  /usr/src   				/usr/local/src
+	一般程序源文件头文件				  /usr/include				/usr/local/include
+	一般程序配置文件		/etc  									/usr/local/etc     ~/.xxx
+
+12.ubuntu Python安装的模块在 ~/.local/lib/python2.7/site-packages/selenium
+
+
+13.
+git remote add origin https://github.com/ruozhiertong/pythonDemo.git
+git push origin master //将本地masterpush到远程origin（url）上。 
+《==》 git push https://github.com/ruozhiertong/UULP.git master:master 前master为本地分支，后master是remote的分支
+
+git pull origin master  //将远程拉取到本地
+《==》git pull https://github.com/ruozhiertong/UULP.git master:master
+前master为远程的分支，后master为本地的分支
+
+git branch --set-upstream-to=origin/master master //设置本地分支master默认到远程的url/master分支上
+之后在master分支上就可以git pull。 git push
+
+./git/config
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/ruozhiertong/UULP.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+
+
