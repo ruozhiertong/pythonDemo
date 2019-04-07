@@ -13,5 +13,25 @@
 			"URL": "https://item.jd.com/100000287115.html",
 			"ExpectedPrice":5788,
 			"Email":"1043096262@qq.com"
+	},
+	"taijihu":{
+			"URL":"https://item.jd.com/4593378.html",
+			"ExpectedPrice":269
+	},
+	"QCY99":{
+			"URL":"https://item.jd.com/100000198633.html",
+			"ExpectedPrice":100
+	},
+	"QCY139":{
+			"URL":"https://item.jd.com/100001884273.html",
+			"ExpectedPrice":139
+	},
+	"sansui":{
+			"URL":"https://item.jd.com/24342752163.html",
+			"ExpectedPrice":195
+	},
+	"AMOI":{
+			"URL":"https://item.jd.com/100000407072.html",
+			"ExpectedPrice":70
 	}
 }
