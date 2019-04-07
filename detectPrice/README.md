@@ -27,6 +27,7 @@ link:
 4.注意json标准语法中是不支持单引号。所以配置文件中的字符串应该都是双引号而不是单引号。 https://blog.csdn.net/u012063507/article/details/71554775
 5.python获取文件创建时间，修改时间： https://www.cnblogs.com/shaosks/p/5614630.html  https://blog.csdn.net/w122079514/article/details/16864403
 6.发送邮件。http://www.runoob.com/python/python-email.html  https://www.cnblogs.com/yufeihlf/p/5726619.html
+邮箱信息：subject， From ，To，正文。
 7.避免163 当做垃圾邮件,554, 导致发布出去。 https://www.cnblogs.com/mlp1234/p/9933919.html
 8.收邮件提供商 可能会将邮件识别为垃圾邮件，所以可能要去垃圾箱中查看。
 9.sendmail 服务： https://www.cnblogs.com/luhouxiang/p/4758403.html
@@ -88,4 +89,88 @@ git branch --set-upstream-to=origin/master master //设置本地分支master默�
 	remote = origin
 	merge = refs/heads/master
 
+14.
+127.0.0.1
+localhost  ==>通过hosts文件映射为127.0.0。1
+rzet.local ==>这是域名，通过dns 映射为127.0.0.1
 
+
+
+
+15.安装mail 和 postfix(sendmail少用了) sudo apt-get install mailutils. 会安装mail 和postfix等。
+
+
+16.邮件协议端口 https://blog.csdn.net/my98800/article/details/78592492
+常用端口：https://blog.csdn.net/lincnl/article/details/2025769 https://www.cnblogs.com/1666818961-lxj/p/7210021.html https://blog.csdn.net/xin3983/article/details/80692300 https://blog.csdn.net/zhanghuiyu01/article/details/80830045
+
+
+echo "hello from local to local" | sendmail ubuntu@ip-172-31-29-66.us-east-2.compute.inter
+
+From ubuntu@ip-172-31-29-66.us-east-2.compute.inter  Thu Apr  4 16:53:39 2019
+Return-Path: <ubuntu@ip-172-31-29-66.us-east-2.compute.inter>
+X-Original-To: ubuntu@ip-172-31-29-66.us-east-2.compute.inter
+Delivered-To: ubuntu@ip-172-31-29-66.us-east-2.compute.inter
+Received: by ip-172-31-29-66.us-east-2.compute.internal (Postfix, from userid 1000)
+	id 176064142C; Thu,  4 Apr 2019 16:53:39 +0000 (UTC)
+Message-Id: <20190404165339.176064142C@ip-172-31-29-66.us-east-2.compute.internal>
+Date: Thu,  4 Apr 2019 16:53:39 +0000 (UTC)
+From: Ubuntu <ubuntu@ip-172-31-29-66.us-east-2.compute.inter>
+
+hello from local to local
+
+echo "hello from local to local" | sendmail ubuntu@ip-172-31-29-66.us-east-2.compute.internal
+
+From ubuntu@ip-172-31-29-66.us-east-2.compute.inter  Thu Apr  4 16:52:18 2019
+Return-Path: <ubuntu@ip-172-31-29-66.us-east-2.compute.inter>
+X-Original-To: ubuntu@ip-172-31-29-66.us-east-2.compute.internal
+Delivered-To: ubuntu@ip-172-31-29-66.us-east-2.compute.internal
+Received: by ip-172-31-29-66.us-east-2.compute.internal (Postfix, from userid 1000)
+	id 9C3424142C; Thu,  4 Apr 2019 16:52:18 +0000 (UTC)
+Message-Id: <20190404165218.9C3424142C@ip-172-31-29-66.us-east-2.compute.internal>
+Date: Thu,  4 Apr 2019 16:52:18 +0000 (UTC)
+From: Ubuntu <ubuntu@ip-172-31-29-66.us-east-2.compute.inter>
+
+hello from local to local
+
+
+echo "hello from local to local" | sendmail localhost 无法投递  
+
+
+ mac 上的
+echo '20190403 mac mail' | mail -s '重要会议' linxianri@rzet.localdomain
+
+echo '20190403 mac mail' | mail -s '重要会议' 1043096262@qq.com ==>550. 在aws上都可以。
+
+echo '20190403 mac mail' | mail -s '重要会议' testajctc@gmail.com ==>550-5.7.1。 在aws上可以。
+
+python脚本中使用本地发送，在mac上不可以(提示连接本地smtp服务器失败)，在aws上可以。好像是因为大学城的IP被封了，用电信手机流量当热点可以发送。The IP you're using to send mail is not authorized to 550-5.7.1 send email directly to our servers
+
+smtpd服务器上一般也有smtp(客户端)，因为服务器也要用这个smtp转发送邮件的。 
+一般用的foxmail客户端写信， mail软件等，这些也都是smtp(客户端软件)。
+
+aws服务器上postfix就是stmpd，postfix中的sendmail就是smtp。 mail也是smtp(客户端软件)。
+以前的sendmail既是stmpd，也是smtp。现在基本都是postfix取代了。
+
+一开始mac上没有smtpd(postfix 25端口)，aws上有启动smtpd。 
+为什么Mac上没有启动smtpd，也能用mail或者sendmail 给自己(或其他邮箱，并不是因为设置三方的stmp)发信，自己也能收到信？
+.mailrc作用？
+似乎.mailrc在Mac和Ubuntu上不起作用，mail命令都是利用本地的smtpd进行发送个，并没有按照.mailrc上指定的stmp进行发送。why？
+python3 API可以利用本地，也可以利用指定的smtp服务器进行发送的。
+
+如何回信？给postfix服务器回信？
+
+
+/var/mail/linxianri ===> mailbox 相当于邮箱。
+
+netstat -tplun
+
+lsof -i tcp: 
+
+ps -ef
+
+nmap localhost
+
+
+urllib 获取的网页是二进制的b。 f = urlopen(xxx) f.read(), 要想解码成相应的字符串要知道相应的编码信息。一般获取的网页的编码信息是由其网页上的meta指定，可以通过f.info()查看编码信息。 
+有可能因为网页压缩导致编解码出现问题，因此要先解压网页，再处理。
+也有部分网页明明编码信息都对，但是decode还是出错，目前没有好的解决方法，只能将ignore掉 decode(xxx, 'ignore')
