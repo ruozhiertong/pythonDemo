@@ -2,6 +2,8 @@
 1.原理：使用selenium抓取网页，监测价格元素。可对京东，苏宁，国美，进行检测。
 
 2.解析html可用selenium中driver 原生的。 也可以用库bs4。 因为只要获得价格信息就可以，没有涉及点击操作等，因此直接urlget获取网页，然后分析其中价格也可以(效率更快)。
+使用urlget效率高，但是获取价格信息较困难，需要分析获取价格的请求。
+使用selenium 获取价格信息简单方便，直接等待网页加载完成后就能获取价格。缺点就是一个网页会有多个请求，因此要等待时间多久，效率低。
 
 3.在使用selenium时，打开商品页面要很久，一直阻塞在打开阶段效率低。 使用等待机制。
 
@@ -202,3 +204,5 @@ https://stackoverflow.com/questions/8356517/permanent-temporary-failure-in-name-
 
 urlopen :https://www.cnblogs.com/sysu-blackbear/p/3629420.html
 https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432688314740a0aed473a39f47b09c8c7274c9ab6aee000/
+
+python 学习 廖雪峰 https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000
