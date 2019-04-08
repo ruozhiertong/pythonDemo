@@ -33,5 +33,17 @@
 	"AMOI":{
 			"URL":"https://item.jd.com/100000407072.html",
 			"ExpectedPrice":70
+	},
+	"PhilipsHSP9500":{
+			"URL":"https://item.jd.com/1231724.html",
+			"ExpectedPrice":399
+	},
+	"EDIFIER_W855BT":{
+			"URL":"https://item.jd.com/2952697.html",
+			"ExpectedPrice":450
+	},
+	"EDIFIER_W830BT":{
+			"URL":"https://item.jd.com/5213570.html",
+			"ExpectedPrice":379
 	}
 }

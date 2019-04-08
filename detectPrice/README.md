@@ -166,6 +166,8 @@ netstat -tplun
 
 lsof -i tcp: 
 
+ps -aux
+
 ps -ef
 
 nmap localhost
@@ -174,3 +176,29 @@ nmap localhost
 urllib 获取的网页是二进制的b。 f = urlopen(xxx) f.read(), 要想解码成相应的字符串要知道相应的编码信息。一般获取的网页的编码信息是由其网页上的meta指定，可以通过f.info()查看编码信息。 
 有可能因为网页压缩导致编解码出现问题，因此要先解压网页，再处理。
 也有部分网页明明编码信息都对，但是decode还是出错，目前没有好的解决方法，只能将ignore掉 decode(xxx, 'ignore')
+
+
+Python中字符串 有str形式，也有bytes类型形式。 
+bytes是字符串的二进制形式(字符串到二进制有编码，具体哪种编码看具体语境的形式)（就同其在内存中表示形式一样的，即内存中的二进制形式）。 两种形式之间的转换，编码解码，注意编码解码格式。
+a ='hello'  b=b'hello'  #python3默认是utf-8
+a.encode() == b ==> TRUE
+a == b.encode()  ==>TRUE
+
+字符在内存中存的是二进制的。当然有多种的编解码格式的二进制，具体应该看具体语境。
+
+Python3字符串前缀u、b、r
+https://blog.csdn.net/weixin_42165585/article/details/80980739
+https://blog.csdn.net/u010496169/article/details/70045895
+https://www.cnblogs.com/liangmingshen/p/9274021.html
+python2中加u和不加u，是为了明确其字符串在内存中存储是unicode，避免在不同机器，因为其解释器因不同系统环境导致存储在内存中的格式不一样导致编解码时出错。加u明确声明以unicode。
+python3中默认都是unicode，因此加不加都一样的。
+
+
+urllib urlopen 太多链接等待关闭，会出现urllib2.URLError'(<urlopen error [Errno -3] Temporary failure in name resolution>。 用完要及时关闭。
+https://stackoverflow.com/questions/14560507/urllib2-urlerrorurlopen-error-errno-3-temporary-failure-in-name-resolutio
+https://stackoverflow.com/questions/8356517/permanent-temporary-failure-in-name-resolution-after-running-for-a-number-of-h
+
+
+
+urlopen :https://www.cnblogs.com/sysu-blackbear/p/3629420.html
+https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432688314740a0aed473a39f47b09c8c7274c9ab6aee000/
