@@ -206,3 +206,13 @@ urlopen :https://www.cnblogs.com/sysu-blackbear/p/3629420.html
 https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432688314740a0aed473a39f47b09c8c7274c9ab6aee000/
 
 python 学习 廖雪峰 https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000
+
+
+命名方法：匈牙利命名法，驼峰式命名法(小驼峰式命名法)，帕斯卡命名法(大驼峰式命名法)，下划线命名法。
+https://blog.csdn.net/example440982/article/details/69524347
+
+#Python命名规范。（python等脚本式语言用的较多的是下划线命名法， java用的较多的是驼峰式命名法）
+#https://blog.csdn.net/weixin_39723544/article/details/82144280
+#除了类名使用首字母大写的驼峰(单词首字母大写)=》帕斯卡命名法
+#其他如 变量，函数，属性，方法全部下划线命名法（全部小写，单词之间用下划线）。 常量全部大写，单词之间下划线。
+
