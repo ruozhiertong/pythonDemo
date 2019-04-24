@@ -1,0 +1,32 @@
+
+				#<span class="price J-p-1592448">349.00</span>
+				#靠，源文件并没有包含价格数字。这个就郁闷了，拿不到数据。
+				#text.find('<span class="price ')
+
+				# https://c.3.cn/recommend?callback=handleComboCallback&methods=accessories&sku=6287165&cat=670%2C677%2C11303&lid=19&uuid=1552287025595485947617&pin=&ck=pin%2CipLocation%2Catw%2Caview&lim=5&cuuid=1552287025595485947617&csid=122270672.14.1552287025595485947617%7C7.1554184599&_=1554187633042
+				# callback=jQuery5509153&type=1&area=19_1607_3155_0&pdtk=&pduid=1552287025595485947617&pdpin=&pin=null&pdbp=0&skuIds=J_6287165%2CJ_100002657042%2CJ_3180109%2CJ_8074512%2CJ_4394599%2CJ_2135522&ext=11100000&source=item-pc
+				# https://c0.3.cn/stock?skuId=6287165&cat=670,677,11303&venderId=1000075981&area=19_1607_3155_0&buyNum=1&choseSuitSkuIds=&extraParam={%22originid%22:%221%22}&ch=1&fqsp=0&pduid=1552287025595485947617&pdpin=&callback=jQuery251820
+
+				# https://c0.3.cn/stock?skuId=6287165&cat=670,677,11303&venderId=1000075981&area=19_1607_3155_0&buyNum=1&callback=jQuery251820
+
+
+				# https://c0.3.cn/stock?skuId=1592448&cat=670,677,11303&venderId=1000000328&area=19_1607_3155_0&buyNum=1&callback=jQuery3990626
+
+
+				# https://c0.3.cn/stock?skuId=6287165&cat=670,677,11303&venderId=1000075981&area=19_1607_3155_0&buyNum=1&choseSuitSkuIds=&extraParam={%22originid%22:%221%22}&ch=1&fqsp=0&pduid=1552287025595485947617&pdpin=&callback=jQuery776046
+
+				# jQuery776046({"stock":{"isWalMar":false,"isJDexpress":"0","self_D":{"vender":"三星存储京东自营旗舰店","id":1000075981,"df":null,"po":"false","deliver":"三星存储京东自营旗舰店","cg":"670:677:11303","url":"http://samsungmemory.jd.com","vid":1000075981,"type":0,"linkphone":""},"isPlus":false,"serviceInfo":"由 <span class='hl_red'>京东</span> 发货, 供应商提供售后服务. ","cla":[],"rid":null,"PopType":0,"dcashDesc":"","freshEdi":null,"isSam":false,"area":{"countyName":"南山区","success":true,"townName":"","cityName":"深圳市","provinceName":"广东"},"support":[{"iconTip":"免费提供闲置物品回收服务，完成回收后可获得京东E卡或现金。","showName":"以旧换新，卖了换钱","helpLink":"//sale.jd.com/act/02ZCO1Nqk7eALJw.html?s=1&skuId=6287165","id":"old2new"}],"weightValue":"0.08kg","ab":"-1","sr":[],"pr":{"promiseResult":"23:00前下单,预计<b>明天(04月03日)</b>送达","resultCode":1},"eir":[{"helpLink":"//help.jd.com/user/issue/103-983.html","showName":"99元免基础运费(20kg内)","iconType":0,"resultCode":1,"iconTip":"所选地址自营订单满99元免基础运费(20kg内)，超出重量加收1元/kg续重运费。","iconSrc":"99元免基础运费(20kg内)","picUrl":"//static.360buyimg.com/item/assets/picon/mianyunfei.png","iconCode":"free_delivery_zhong"}],"skuState":1,"yjhxMap":{"IsSXQJ-1":{"exceptAttr":"YuShou,isKO,isJMa","attr":"IsSXQJ-1","url":"//huishou.jd.com/huanxin?s=1","urlName":"以旧换新，闲置回收","type":2,"tips":"购买新品时可同步进行闲置物品回收，将闲置物品卖了换钱用于消费或提现。"},"IsSXQJ":{"exceptAttr":"","attr":"IsSXQJ","url":"//sale.jd.com/act/02ZCO1Nqk7eALJw.html?s=1","urlName":"以旧换新，卖了换钱","type":1,"tips":"免费提供闲置物品回收服务，完成回收后可获得京东E卡或现金。"}},"realSkuId":6287165,"promiseResult":"23:00前下单,预计<b>明天(04月03日)</b>送达","ec":"-1","IsPurchase":true,"ae":"-1","StockState":33,"af":"-1","dcId":"603","promiseYX":{"helpLink":"http://help.jd.com/user/issue/126-3780.html  ","showName":"支持7天无理由退货","iconType":0,"resultCode":1,"iconTip":"支持7天无理由退货","iconSrc":"7天无理由退货","picUrl":"\\","iconCode":"service_qitiantuihuo"},"v":"0","ArrivalDate":"","ag":"-1","promiseMark":"支持7天无理由退货","sid":"10","areaLevel":4,"ir":[{"helpLink":"//help.jd.com/user/issue/103-983.html","showName":"京准达","iconType":0,"resultCode":1,"iconTip":"选择京准达服务，可指定精确时间点收货；若京东责任超时，即时赔付","iconSrc":"京准达","picUrl":"//static.360buyimg.com/item/assets/picon/jingzhunda.png","iconCode":"sendpay_zhun"},{"helpLink":"//help.jd.com/user/issue/103-983.html","showName":"211限时达","iconType":0,"resultCode":1,"iconTip":"上午下单，下午送达","iconSrc":"211限时达","picUrl":"//static.360buyimg.com/item/assets/picon/zhongbiao.png","iconCode":"sendpay_211"},{"helpLink":"//help.jd.com/user/issue/103-983.html","showName":"自提","iconType":0,"resultCode":1,"iconTip":"我们提供多种自提服务，包括京东自提点、京东校园派、自助提货柜、移动自提车等服务。","iconSrc":"自提","picUrl":"//static.360buyimg.com/item/assets/picon/shoutixiang.png","iconCode":"special_ziti"}],"vd":null,"venderType":null,"rn":-1,"Dti":null,"m":"0","afsCode":2,"code":1,"isSopUseSelfStock":"0","Ext":"isdangergoods:0,nationallySetWare:5,isOverseaPurchase:0,storeProperty:0,SoldOversea:7,sfkc:0,is7ToReturn:1","isSupportAfs":"true","channel":1,"rfg":0,"StockStateName":"现货","ac":"-1","nationallySetWare":"5","Dc":null,"ad":"-1","stockDesc":"<strong>有货</strong>","jdPrice":{"op":"649.00","m":"699.00","id":"6287165","p":"339.00"},"sidDely":"10"},"choseSuit":[]})
+
+				# https://c0.3.cn/stock?skuId=6287165&cat=670,677,11303&venderId=1000075981&area=19_1607_3155_0&buyNum=1&choseSuitSkuIds=&extraParam={%22originid%22:%221%22}&ch=1&fqsp=0&pduid=1552287025595485947617&pdpin=&callback=jQuery776046
+
+				# https://cd.jd.com/mcsFacade?callback=jQuery1938012&skuId=6287165&cat=670%2C677%2C11303&brandId=15127&area=19_1607_3155_0&price=339.00&harmony=1&_=1554189212672
+				# https://cd.jd.com/description/channel?skuId=6287165&mainSkuId=6287165&cdn=2&callback=showdesc
+
+
+				#经测试，京东和苏宁的价格获取的策略类似，都是在后续的请求中。
+				#当发现开始text中并没有包含价格信息后，原来价格信息等是在后续的请求中的。
+				#开始分析网页上的请求信息，通过价格数字在network选项卡中进行搜索，发现了以下可用的get请求。其中返回的内容是包含价格信息的。
+				#通过这个接口获取价格也是可以的。关键是要各个参数。参数基本都在获取的页面中。获取的参数，构造get请求，获取价格信息。
+				#获取各个参数的代码比较丑陋，只是为了能使用。
+				# https://c0.3.cn/stock?skuId=1592448&cat=670,677,11303&venderId=1000000328&area=19_1607_3155_0&buyNum=1&callback=jQuery3990626
+				
