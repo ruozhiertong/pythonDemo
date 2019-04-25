@@ -63,6 +63,9 @@ https://blog.csdn.net/u014259503/article/details/82775651
 git设置忽略已提交过但本地已修改的文件：
 https://www.cnblogs.com/qq917937712/p/5761970.html
 
+AWS git上只拉取detectPrice目录，并且排除了detectPrice目录下的 *.txt和README.md。
+	见AWS .git/info/sparse-chekout 配置文件。
+
 11.linux/unix 
 	一般静态库 放在      /lib   /lib64   /usr/lib  				/usr/local/lib
 	一般程序动态库放在					   /usr/share				/usr/local/share
