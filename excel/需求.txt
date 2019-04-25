@@ -1,0 +1,14 @@
+1.根据某一列的成员分组。各自分成一张张sheet。
+2.选取Coountry IN，
+3.选取operation unit为821 3rd  821IC(Account为21705)  845 847 848 849 850 851 897
+4.days late update to today（today - due day）
+5.check days late. days late<0,current=total. 如果原始数据有错，删除错误，保留正确。
+
+
+6.排序:customer name/currency/ days late(降序)
+7.subtotal sum group。 函数 分类汇总。 分类字段 Customer， 汇总方式 求和， 选定汇总项Current 1-days....
+
+
+
+8. day late >= -10 标红
+9.第一行固定

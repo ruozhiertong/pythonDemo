@@ -1,0 +1,504 @@
+Sub CFGZB()
+'VAB 操作Excel： sheet对象， range对象， cell对象。 （表，区域，单元格）
+'Range对象实际上一个二维数组，每个元素是一个单元格。objrange(i,j) 是选取元素。 Range("A1:B2")，Range(Cells(), Cells())是创建range对象(Range("A1") 只有一个单元格的range对象)
+'对缩进没有什么要求，不像Python那样.VB中是以具体标识符的开始和结束作为语句块的。如sub  end sub.
+'对于函数，过程等调用，可以加括号，也可以不加括号。如果对于要求要有返回值，一般加括号，不要求返回值，可以不加括号。
+MsgBox ("Line 1 : " & UBound(Array(5, 2, 3)))
+    MsgBox ("Line 1 : " & LBound(Array(5, 2, 3)))
+    MsgBox (Application.UserName)
+    
+    
+    Dim myRange As Range
+
+    Dim myArray
+
+    Dim titleRange As Range
+
+    Dim title As String
+    
+    Dim sourceSheetName
+    
+    sourceSheetName = Sheets(1).Name
+    
+    Dim columnNum As Integer
+
+    Set myRange = Application.InputBox(prompt:="请选择标题行/表头行：", Type:=8)
+
+    MsgBox(myRange.column)
+
+    myArray = WorksheetFunction.Transpose(myRange)
+
+    Set titleRange = Application.InputBox(prompt:="请选择拆分的表头，必须是第一行，且为一个单元格，如：“姓名”", Type:=8)
+
+    title = titleRange.Value
+    MsgBox ("title" & title)
+
+    '返回指定区域中第一块中的第一列的列号。 只读 Long。
+    columnNum = myRange.Column
+    rowIndex = myRange.Row
+
+    Application.ScreenUpdating = False
+
+    Application.DisplayAlerts = False
+    
+    '声明变量时可以直接用类型符，比如Dim a As Integer可以直接写成Dim a%
+
+    Dim i&, Myr&, Arr, num&
+
+    Dim d, k
+
+    For i = Sheets.Count To 1 Step -1
+
+        If Sheets(i).Name <> sourceSheetName Then
+
+            Sheets(i).Delete
+
+        End If
+
+    Next i
+    '字典数据类型
+    
+    Set d = CreateObject("Scripting.Dictionary")
+    
+    '返回一个 Range 对象，它表示指定工作表上所使用的区域。
+    Myr = Worksheets(sourceSheetName).UsedRange.Rows.Count
+
+    Arr = Worksheets(sourceSheetName).Range(Cells(2, columnNum), Cells(Myr, columnNum))
+    
+    MsgBox ("rows " & Myr & "col" & columnNum)
+    
+
+    For i = 1 To UBound(Arr)
+
+        d(Arr(i, 1)) = ""
+
+    Next
+
+    k = d.keys
+
+    For i = 0 To UBound(k)
+
+        Set conn = CreateObject("adodb.connection")
+
+        conn.Open "provider=microsoft.jet.oledb.4.0;extended properties=excel 8.0;data source=" & ThisWorkbook.FullName
+        '注意字段要加[]
+
+        Sql = "select * from [" & sourceSheetName & "$] where [" & title & "] = '" & k(i) & "'"
+        
+        'MsgBox (Sql)
+
+        Worksheets.Add after:=Sheets(Sheets.Count)
+
+        With ActiveSheet
+
+            .Name = k(i)
+            '复制行头
+
+            For num = 1 To UBound(myArray)
+
+                .Cells(1, num) = myArray(num, 1)
+
+            Next num
+
+            .Range("A2").CopyFromRecordset conn.Execute(Sql)
+
+        End With
+
+        Sheets(1).Select
+
+        Sheets(1).Cells.Select
+
+        Selection.Copy
+
+        Worksheets(Sheets.Count).Activate
+
+        ActiveSheet.Cells.Select
+	
+	':= 指定特定的参数值.类似Python中的关键字参数。
+
+        Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+
+        Application.CutCopyMode = False
+
+    Next i
+
+    conn.Close
+
+    Set conn = Nothing
+
+    Application.DisplayAlerts = True
+
+    Application.ScreenUpdating = True
+
+End Sub
+
+
+
+
+
+
+Sub test()
+    'Range("a1,c1,e1") 是这三个不连续的cell组成的range
+    For Each Rng In Range("a1,c1,e1")
+    'MsgBox Rng.Value
+     MsgBox Rng.Column
+     MsgBox Rng.Row
+    Next
+    
+    'Range("a1:e1") 是这三个不连续的cell组成的range
+    For Each Rng In Range("a1:e1")
+    MsgBox Rng.Value
+    
+    Next
+    
+End Sub
+
+
+
+
+Sub test()
+    Dim myRange As Range
+
+    Dim myArray
+
+    Dim titleRange As Range
+
+    Dim title As String
+    
+    Dim sourceSheetName
+    
+    sourceSheetName = Sheets(1).Name
+    
+    Dim columnNum As Integer
+
+    Set myRange = Application.InputBox(prompt:="请选择标题行/表头行：", Type:=8)
+
+    MsgBox (myRange.Row)
+
+    myArray = WorksheetFunction.Transpose(myRange)
+    '表头前面行必须不能有任何内容，因此也才叫做表头。因为这个要运用在sql中。 如果选取的不是按照sql，可能不要求表头前面行不能有东西。
+
+    Set titleRange = Application.InputBox(prompt:="请选择拆分的表头，必须是第一行，且为一个单元格，如：“姓名”", Type:=8)
+
+    title = titleRange.Value
+    MsgBox ("title" & title)
+
+    '返回指定区域中第一块中的第一列的列号。 只读 Long。
+    columnNum = myRange.Column
+    RowIndex = myRange.Row
+
+    Application.ScreenUpdating = False
+
+    Application.DisplayAlerts = False
+    
+    '声明变量时可以直接用类型符，比如Dim a As Integer可以直接写成Dim a%
+
+    Dim i&, Myr&, Arr, num&
+
+    Dim d, k
+
+    For i = Sheets.Count To 1 Step -1
+
+        If Sheets(i).Name <> sourceSheetName Then
+
+            Sheets(i).Delete
+
+        End If
+
+    Next i
+    '字典数据类型
+    
+    Set d = CreateObject("Scripting.Dictionary")
+    
+    '返回一个 Range 对象，它表示指定工作表上所使用的区域。
+    Myr = Worksheets(sourceSheetName).UsedRange.Rows.Count
+
+    Arr = Worksheets(sourceSheetName).Range(Cells(RowIndex + 1, columnNum), Cells(Myr, columnNum))
+    
+    MsgBox ("rows " & Myr & "col" & columnNum)
+    
+
+    '利用dictionary 去重
+    For i = 1 To UBound(Arr)
+
+        d(Arr(i, 1)) = ""
+
+    Next
+
+    k = d.keys
+    
+
+    For i = 0 To UBound(k)
+
+        Set conn = CreateObject("adodb.connection")
+
+        conn.Open "provider=microsoft.jet.oledb.4.0;extended properties=excel 8.0;data source=" & ThisWorkbook.FullName
+        '注意字段要加[]
+
+        Sql = "select * from [" & sourceSheetName & "$] where [" & title & "] = '" & k(i) & "'"
+        
+        MsgBox (Sql)
+
+        Worksheets.Add after:=Sheets(Sheets.Count)
+
+        With ActiveSheet
+
+            .Name = k(i)
+            '复制行头
+
+            For num = 1 To UBound(myArray)
+
+                .Cells(1, num) = myArray(num, 1)
+
+            Next num
+            
+            
+            Set rst = conn.Execute(Sql)
+            .Range("A2").CopyFromRecordset rst
+
+        End With
+
+        Sheets(1).Select
+
+        Sheets(1).Cells.Select
+
+        Selection.Copy
+
+        Worksheets(Sheets.Count).Activate
+
+        ActiveSheet.Cells.Select
+    
+    ':= 指定特定的参数值.类似Python中的关键字参数。
+
+        Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+
+        Application.CutCopyMode = False
+
+    Next i
+
+    conn.Close
+
+    Set conn = Nothing
+
+    Application.DisplayAlerts = True
+
+    Application.ScreenUpdating = True
+End Sub
+
+Sub test()
+    Dim myRange As Range
+
+    Dim myArray
+
+    Dim titleRange As Range
+
+    Dim title As String
+    
+    Dim sourceSheetName
+    
+    sourceSheetName = Sheets(1).Name
+    
+    Dim columnNum As Integer
+
+    Set myRange = Application.InputBox(prompt:="请选择标题行/表头行：", Type:=8)
+
+    MsgBox (myRange.Row)
+
+    myArray = WorksheetFunction.Transpose(myRange)
+    '表头前面行必须不能有任何内容，因此也才叫做表头。因为这个要运用在sql中。 如果选取的不是按照sql，可能不要求表头前面行不能有东西。
+
+    Set titleRange = Application.InputBox(prompt:="请选择拆分的表头，必须是第一行，且为一个单元格，如：“姓名”", Type:=8)
+
+    title = titleRange.Value
+    MsgBox ("title" & title)
+
+    '返回指定区域中第一块中的第一列的列号。 只读 Long。
+    columnNum = myRange.Column
+    RowIndex = myRange.Row
+
+    Application.ScreenUpdating = False
+
+    Application.DisplayAlerts = False
+    
+    '声明变量时可以直接用类型符，比如Dim a As Integer可以直接写成Dim a%
+
+    Dim i&, Myr&, Arr, num&
+
+    Dim d, k
+
+    For i = Sheets.Count To 1 Step -1
+
+        If Sheets(i).Name <> sourceSheetName Then
+
+            Sheets(i).Delete
+
+        End If
+
+    Next i
+    '字典数据类型
+    
+    Set d = CreateObject("Scripting.Dictionary")
+    
+    '返回一个 Range 对象，它表示指定工作表上所使用的区域。 前面的空白行RowIndex - 1
+    Myr = Worksheets(sourceSheetName).UsedRange.Rows.Count + RowIndex - 1
+
+    Arr = Worksheets(sourceSheetName).Range(Cells(RowIndex + 1, columnNum), Cells(Myr, columnNum))
+    
+    MsgBox ("rows " & Myr & "col" & columnNum)
+    
+
+    '利用dictionary 去重
+    For i = 1 To UBound(Arr)
+        If Arr(i, 1) = "" Then
+            MsgBox (Arr(i, 1))
+            Arr(i, 1) = "None"
+        End If
+
+        d(Arr(i, 1)) = ""
+
+    Next
+
+    k = d.keys
+    
+
+    For i = 0 To UBound(k)
+
+        Set conn = CreateObject("adodb.connection")
+
+        conn.Open "provider=microsoft.jet.oledb.4.0;extended properties=excel 8.0;data source=" & ThisWorkbook.FullName
+        '注意字段要加[]
+
+        If k(i) = "None" Then
+            k(i) = ""
+        End If
+        
+        Sql = "select * from [" & sourceSheetName & "$] where [" & title & "] = '" & k(i) & "'"
+        
+        MsgBox (Sql)
+
+        Worksheets.Add after:=Sheets(Sheets.Count)
+
+        With ActiveSheet
+            If k(i) = "" Then
+                .Name = "None"
+            Else
+                .Name = k(i)
+            End If
+            
+            
+            '复制行头
+
+            For num = 1 To UBound(myArray)
+
+                .Cells(1, num) = myArray(num, 1)
+
+            Next num
+            
+            
+            Set rst = conn.Execute(Sql)
+            .Range("A2").CopyFromRecordset rst
+
+        End With
+
+        Sheets(1).Select
+
+        Sheets(1).Cells.Select
+
+        Selection.Copy
+
+        Worksheets(Sheets.Count).Activate
+
+        ActiveSheet.Cells.Select
+    
+    ':= 指定特定的参数值.类似Python中的关键字参数。
+
+        Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+
+        Application.CutCopyMode = False
+
+    Next i
+
+    conn.Close
+
+    Set conn = Nothing
+
+    Application.DisplayAlerts = True
+
+    Application.ScreenUpdating = True
+End Sub
+
+=============================================
+
+'分类汇总（先以某个分类，再根据汇总项汇总）
+Sub mySubtotal()
+    Dim arr, er(), x%, k%, str$, d As Object
+    
+    Set d = CreateObject("scripting.dictionary")
+    
+    arr = Sheets("897IC").Range("A1").CurrentRegion
+    
+    'MsgBox (UBound(arr))
+    
+    'MsgBox (UBound(arr, 2))
+    
+    '二维数组
+    ReDim er(1 To UBound(arr), 1 To 3)
+    
+    For x = 1 To UBound(arr)
+      str = arr(x, 1) & "-" & arr(x, 2)
+      MsgBox (str)
+      If d.exists(str) Then
+           er(d(str), 3) = er(d(str), 3) + arr(x, 3)
+      Else
+         k = k + 1
+         d(str) = k
+          er(k, 1) = arr(x, 1)
+          er(k, 2) = arr(x, 2)
+          er(k, 3) = arr(x, 3)
+      End If
+      Next x
+       Sheets("851IC").Activate
+       Range("a2").Resize(UBound(er), 3) = er
+       Range("a1").CurrentRegion.Borders.ColorIndex = 0
+End Sub
+
+
+Sub mySubtotal(sheetName, groupByCol, col1, col2, col3, col4, col5, col6, col7)
+    Worksheets(sheetName).Activate
+    Sheets(sheetName).Range("A1").CurrentRegion.Subtotal GroupBy:=groupByCol, Function:=xlSum, TotalList:=Array(col1, col2, col3, col4, col5, col6, col7)
+End Sub
+
+
+Sub demo()
+    Dim arr, lrow&, brr(), n&, m&, dic As Object, str$, crr, nrr
+    Set dic = CreateObject("scripting.dictionary")
+    
+    lrow = Sheets("851IC").Cells(Rows.Count, "A").End(xlUp).Row
+    MsgBox (lrow)
+    arr = Sheets("851IC").Range("A1:C" & lrow)
+    
+    For n = 1 To UBound(arr)
+        If arr(n, 1) <> 0 Then
+            str = arr(n, 1) & "-" & arr(n, 2)
+            If Not dic.exists(str) Then
+                dic(str) = arr(n, 3)
+            Else
+                dic(str) = dic(str) + arr(n, 3)
+            End If
+        End If
+    Next
+    ReDim brr(1 To dic.Count, 1 To 3)
+    crr = dic.keys: nrr = dic.items
+    For n = 1 To dic.Count
+        brr(n, 1) = Split(crr(n - 1), "-")(0)
+        brr(n, 2) = Split(crr(n - 1), "-")(1)
+        brr(n, 3) = nrr(n - 1)
+    Next
+    With Sheets("分类汇总表")
+        .Range("A1:C1").Merge
+        .[a1].Value = "分类汇总表"
+        .[a1].HorizontalAlignment = xlCenter
+        .[a2].Resize(UBound(brr), 3) = brr
+    End With
+End Sub
+
