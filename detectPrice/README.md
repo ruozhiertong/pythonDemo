@@ -27,6 +27,7 @@ link:
 		find_element_by_class_name
 		find_element_by_css_selector
 4.注意json标准语法中是不支持单引号。所以配置文件中的字符串应该都是双引号而不是单引号。 https://blog.csdn.net/u012063507/article/details/71554775
+json 验证和格式化：https://www.json.cn/
 5.python获取文件创建时间，修改时间： https://www.cnblogs.com/shaosks/p/5614630.html  https://blog.csdn.net/w122079514/article/details/16864403
 6.发送邮件。http://www.runoob.com/python/python-email.html  https://www.cnblogs.com/yufeihlf/p/5726619.html
 邮箱信息：subject， From ，To，正文。
@@ -180,13 +181,21 @@ urllib 获取的网页是二进制的b。 f = urlopen(xxx) f.read(), 要想解�
 也有部分网页明明编码信息都对，但是decode还是出错，目前没有好的解决方法，只能将ignore掉 decode(xxx, 'ignore')
 
 
-Python中字符串 有str形式，也有bytes类型形式。 
+Python中字符串 有str形式 和 bytes类型形式。 
 bytes是字符串的二进制形式(字符串到二进制有编码，具体哪种编码看具体语境的形式)（就同其在内存中表示形式一样的，即内存中的二进制形式）。 两种形式之间的转换，编码解码，注意编码解码格式。
 a ='hello'  b=b'hello'  #python3默认是utf-8
 a.encode() == b ==> TRUE
 a == b.encode()  ==>TRUE
 
 字符在内存中存的是二进制的。当然有多种的编解码格式的二进制，具体应该看具体语境。
+
+python字符串：单引号，双引号，三引号(三单引号三双引号)，单/双引号前的前缀(r ,b u).
+其中三引号，前缀r 的字符串，不处理其中的转义\ (除非遇到冲突的开始结束的分割符如r'' 或r"" 中的字符串有单引号 /双引号，那么需要对单引号/双引号 转义。),直接按照原样输出。其余形式的字符串遇到转义字符会进行转义处理，输出时按照转义后的输出。
+
+如果字符串有转义，而且要进行转义处理(不是三引号，r)， 那么利用到的字符串都是转义处理后的。
+一般处理字符串的程序，函数等都是按照其转义后的结果进行处理的。
+
+python3 的交互界面中, stest='\\"hello\\"', 直接stest输出 和print(stest)输出区别： stest直接输出是按照字符串原样输出 结果：'\\"hello\\"' (而且保留stest前后' 表明是字符串)。 print输出是会按照其中的转义字符转义处理之后输出 结果：\"hello\"。(并没有保留赋值时的前后')
 
 Python3字符串前缀u、b、r
 https://blog.csdn.net/weixin_42165585/article/details/80980739
@@ -195,6 +204,15 @@ https://www.cnblogs.com/liangmingshen/p/9274021.html
 python2中加u和不加u，是为了明确其字符串在内存中存储是unicode，避免在不同机器，因为其解释器因不同系统环境导致存储在内存中的格式不一样导致编解码时出错。加u明确声明以unicode。
 python3中默认都是unicode，因此加不加都一样的。
 
+
+st = '{"policySellPoint":"{\\"returnCode\\":0}"}'
+json.loads(st) ==> 解析正确。
+
+st = '{"policySellPoint":"{\"returnCode\":0}"}'
+json.loads(st) ==> 解析错误。
+
+分析: 如果没有两个\，那么就会被解析成'{"policySellPoint":"{"returnCode":0}"}'，而此时在解析"{" 双引号结束时，并不是遇到冒号，因此不能解析成一个key，而且还多了returnCode未知的变量。
+同理，有两个\, 会变成 '{"policySellPoint":"{\"returnCode\":0}"}',解析到"{\" 并不会代表着结束，而是一直解析到最后，遇到0}" 后的" 才是这个值的结束。
 
 urllib urlopen 太多链接等待关闭，会出现urllib2.URLError'(<urlopen error [Errno -3] Temporary failure in name resolution>。 用完要及时关闭。
 https://stackoverflow.com/questions/14560507/urllib2-urlerrorurlopen-error-errno-3-temporary-failure-in-name-resolutio
