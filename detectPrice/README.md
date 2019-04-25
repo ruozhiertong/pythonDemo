@@ -54,6 +54,15 @@ b.
 git clone
 
 
+
+git push时忽略文件。  pull 指定文件，忽略文件。 
+https://www.jianshu.com/p/b67318c3433d 
+https://www.jianshu.com/p/e82c89e187c5 
+https://blog.csdn.net/u014259503/article/details/82775651
+
+git设置忽略已提交过但本地已修改的文件：
+https://www.cnblogs.com/qq917937712/p/5761970.html
+
 11.linux/unix 
 	一般静态库 放在      /lib   /lib64   /usr/lib  				/usr/local/lib
 	一般程序动态库放在					   /usr/share				/usr/local/share
