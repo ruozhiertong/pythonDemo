@@ -4,6 +4,10 @@
 			"ExpectedPrice":329,
 			"Email":"1043096262@qq.com"
 	},
+	"samsung860_2":{
+			"URL": "https://product.suning.com/0000000000/10089208136.html",
+			"ExpectedPrice":329
+	},
 	"toshibaQ200":{
 			"URL": "https://item.jd.com/1592448.html",
 			"ExpectedPrice":329,
@@ -11,13 +15,13 @@
 	},
 	"iphonexr128G":{
 			"URL": "https://item.jd.com/100000287115.html",
-			"ExpectedPrice":5788,
+			"ExpectedPrice":5588,
 			"Email":"1043096262@qq.com"
 	},
-	"taijihu":{
-			"URL":"https://item.jd.com/4593378.html",
-			"ExpectedPrice":269
-	},
+	"iphonexr128G_2":{
+			"URL": "https://product.suning.com/0000000000/10606656239.html",
+			"ExpectedPrice":5588
+			},
 	"QCY99":{
 			"URL":"https://item.jd.com/100000198633.html",
 			"ExpectedPrice":100
@@ -30,20 +34,28 @@
 			"URL":"https://item.jd.com/24342752163.html",
 			"ExpectedPrice":195
 	},
-	"AMOI":{
-			"URL":"https://item.jd.com/100000407072.html",
-			"ExpectedPrice":70
-	},
-	"PhilipsHSP9500":{
+	"PhilipsSHP9500":{
 			"URL":"https://item.jd.com/1231724.html",
+			"ExpectedPrice":399
+	},
+	"PhilipsSHP9500_2":{
+			"URL":"https://product.suning.com/0070142868/101181340.html",
 			"ExpectedPrice":399
 	},
 	"EDIFIER_W855BT":{
 			"URL":"https://item.jd.com/2952697.html",
 			"ExpectedPrice":450
 	},
+	"EDIFIER_W855BT_2":{
+			"URL":"https://product.suning.com/0000000000/661698076.html",
+			"ExpectedPrice":450
+	},
 	"EDIFIER_W830BT":{
 			"URL":"https://item.jd.com/5213570.html",
 			"ExpectedPrice":379
+	},
+	"EDIFIER_W830BT_2":{
+			"URL":"https://product.suning.com/0070183668/10560840380.html",
+			"ExpectedPrice":339
 	}
 }
