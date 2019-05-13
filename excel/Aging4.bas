@@ -2,7 +2,7 @@ Attribute VB_Name = "Aging4"
 
 Sub CopySheet(ByVal conn, ByVal sql, ByVal headRange, ByVal destSheetName)
 
-    Application.ScreenUpdating = False
+    'Application.ScreenUpdating = False
      
     Worksheets.Add after:=Sheets(Sheets.Count)
     With ActiveSheet
@@ -61,14 +61,14 @@ Sub CopySheet(ByVal conn, ByVal sql, ByVal headRange, ByVal destSheetName)
     
     
     
-    Application.ScreenUpdating = True
+    'Application.ScreenUpdating = True
     
 
 End Sub
 
 
 
-Sub FormatSheet(sheetName)
+Sub FormatSheet(sheetName, totalColumn, day361Column)
 
     Sheets(sheetName).Activate
     '取消自动换行
@@ -89,11 +89,18 @@ Sub FormatSheet(sheetName)
     ActiveSheet.Range(Cells(2, 1), Cells(ActiveSheet.UsedRange.Rows.Count, ActiveSheet.UsedRange.Columns.Count)).Font.Size = 10
     
     
+    '区域格式
+    'http://www.360doc.com/content/16/0802/12/6076639_580221192.shtml
+    'https://zhidao.baidu.com/question/1495713913788426939.html?sort=11&rn=5&pn=0#wgt-answers
+    'https://zhidao.baidu.com/question/344215136.html
+    'Range(Cells(2, totalColumn), Cells(fcRow, day361Column)).NumberFormat = "Accounting"
+    ActiveSheet.Range(Cells(2, totalColumn), Cells(ActiveSheet.UsedRange.Rows.Count, day361Column)).NumberFormat = "#,###0.00"
+    
 End Sub
 
 Sub SortSheet(sheetName, ParamArray cols())
 
-    Application.ScreenUpdating = False
+    'Application.ScreenUpdating = False
  
     Sheets(sheetName).Activate
     
@@ -138,7 +145,7 @@ Sub SortSheet(sheetName, ParamArray cols())
     
     'Sheets(sheetName).Range(Cells(2, 1), Cells(Sheets(sheetName).UsedRange.Rows.Count, Sheets(sheetName).UsedRange.Columns.Count)).Sort key1:=k1, Order1:=1, key2:=k2, Order2:=1, key3:=k3, Order3:=2
     
-    Application.ScreenUpdating = True
+    'Application.ScreenUpdating = True
     
 End Sub
 
@@ -255,6 +262,7 @@ Function GetRateDict(destSheetName, trxColumn, sheetDict)
     
     Cells(rowTemp, 1).Clear
     
+    '对象(如字典对象)赋值都要Set ，直接=是不行的
     Set GetRateDict = rateDict
 End Function
 
@@ -361,16 +369,6 @@ Sub CalculateCurrency(destSheetName, trxColumn, accountColumn, totalColumn, day3
             Next idx2
         End If
         
-        
-        '区域格式
-        'http://www.360doc.com/content/16/0802/12/6076639_580221192.shtml
-        'https://zhidao.baidu.com/question/1495713913788426939.html?sort=11&rn=5&pn=0#wgt-answers
-        'https://zhidao.baidu.com/question/344215136.html
-        'Range(Cells(2, totalColumn), Cells(fcRow, day361Column)).NumberFormat = "Accounting"
-        Range(Cells(2, totalColumn), Cells(Sheets(destSheetName).UsedRange.Rows.Count, day361Column)).NumberFormat = "#,###0.00"
-        
-        
-
 End Sub
 
 Sub HandleINRUSD(destSheetName, trxColumn, totalColumn, day361Column, sheetDict)
@@ -446,19 +444,25 @@ End Sub
 
 Sub processAging()
 
+    
+    Application.DisplayAlerts = False
+    
     Sheets(1).Activate
+     
+    '注意前两张表是原始固定的表。删除其他无关表
+    For i = Sheets.Count To 3 Step -1
+        Sheets(i).Delete
+    Next i
+    
+    Application.ScreenUpdating = False
+    
+
     If Cells(1, 1) <> "Operating Unit Desc" Then
          Call preProcess
     End If
     
-        
-    Application.DisplayAlerts = False
-
-    '注意前两张表是原始固定的表。
-    For i = Sheets.Count To 3 Step -1
-        Sheets(i).Delete
-    Next i
-    Application.DisplayAlerts = True
+    
+    
     
 
     mydate = Application.InputBox(prompt:="请输入日期：")
@@ -556,7 +560,7 @@ Sub processAging()
     'MsgBox (dueDateColumn & "" & dayslateColumn & totalColumn & currentColumn & day30Column & day60Column & day90Column & day180Column & day360Column & day361Column)
     
     
-     '需要提取的表 字典形式。 key代表提取的表。 value代表function currency货币类型. 如果额外添加表，在此处添加
+     '需要提取的表 字典形式。 key代表提取的表， 表名。 value代表function currency货币类型. 如果额外添加表，在此处添加
     Dim sheetDict
     Set sheetDict = CreateObject("Scripting.Dictionary")
     sheetDict.Add "821", "HKD"
@@ -569,20 +573,9 @@ Sub processAging()
 
 
     'sheetNames = Array("821", "845", "847", "848", "849", "851", "897")
-    sheetNames = sheetDict.Keys()
-    
-    '保存的目标表
-    Dim destSheetNames(40)
-    destCount = 0
-    
-    
-    
-    
-    Application.ScreenUpdating = False
+    sheetNames = sheetDict.keys()
 
-    Application.DisplayAlerts = False
-    
-
+       
     ':= 指定特定的参数值.类似Python中的关键字参数。
 
    ' Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
@@ -601,21 +594,17 @@ Sub processAging()
         sql = "select * from [" & sourceSheetName & "$] where [Operating Unit Desc] like '%" & sheetNames(i) & "%'" & "and [Account] not like '21705'"
         Call CopySheet(conn, sql, headRange, sheetNames(i))
         
-        destSheetNames(destCount) = sheetNames(i)
         '不能加相同key的值
         'sheetDict.Add destSheetNames(destCount), sheetDict.Item(sheetNames(i))
         '进行覆盖
-        sheetDict(destSheetNames(destCount)) = sheetDict.Item(sheetNames(i))
-        destCount = destCount + 1
+        'sheetDict(sheetNames(i)) = sheetDict.Item(sheetNames(i))
         
         
          '提取IC
         sql = "select * from [" & sourceSheetName & "$] where [Operating Unit Desc] like '%" & sheetNames(i) & "%'" & "and [Account] like '21705'"
         Call CopySheet(conn, sql, headRange, sheetNames(i) & "IC")
         
-        destSheetNames(destCount) = sheetNames(i) & "IC"
-        sheetDict(destSheetNames(destCount)) = sheetDict.Item(sheetNames(i))
-        destCount = destCount + 1
+        sheetDict(sheetNames(i) & "IC") = sheetDict.Item(sheetNames(i))
         
         
     Next i
@@ -623,57 +612,38 @@ Sub processAging()
     '特殊表的处理
     '选取Coountry IN 成一张表
     '注意字段要加[]
+    'key是表名， value是数组
     Dim specSheet
     Set specSheet = CreateObject("Scripting.Dictionary")
-    specSheet.Add "Country IN", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705'"
-    specSheet.Add "INR(USD)", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705'"
-    specSheet.Add "294IN", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Operating Unit Desc] like  '%294%'"
-    specSheet.Add "552IN", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Operating Unit Desc] like  '%552%'"
-    specSheet.Add "596IN", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Operating Unit Desc] like  '%596%'"
-    specSheet.Add "RELIANCE", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%RELIANCE%'"
-    specSheet.Add "IDEA", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%IDEA%'"
-    specSheet.Add "CISCO", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%CISCO%'"
-    specSheet.Add "TATA", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%TATA%'"
-    specSheet.Add "BHARTI", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%BHARTI%' and [Address1] not like '%TELESONIC%'"
-    specSheet.Add "TELESONIC", "select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%BHARTI%' and [Address1] like '%TELESONIC%'"
-    
-    
-    Dim specRate
-    Set specRate = CreateObject("Scripting.Dictionary")
-    specRate.Add "Country IN", "USD"
-    specRate.Add "INR(USD)", "USD"
-    specRate.Add "294IN", "USD"
-    specRate.Add "552IN", "EUR"
-    specRate.Add "596IN", "EUR"
-    specRate.Add "RELIANCE", "USD"
-    specRate.Add "IDEA", "USD"
-    specRate.Add "CISCO", "USD"
-    specRate.Add "TATA", "USD"
-    specRate.Add "BHARTI", "USD"
-    specRate.Add "TELESONIC", "USD"
-    
+    specSheet.Add "Country IN", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705'", "USD")
+    specSheet.Add "INR(USD)", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705'", "USD")
+    specSheet.Add "294IN", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Operating Unit Desc] like  '%294%'", "USD")
+    specSheet.Add "552IN", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Operating Unit Desc] like  '%552%'", "EUR")
+    specSheet.Add "596IN", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Operating Unit Desc] like  '%596%'", "EUR")
+    specSheet.Add "RELIANCE", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%RELIANCE%'", "USD")
+    specSheet.Add "IDEA", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%IDEA%'", "USD")
+    specSheet.Add "CISCO", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%CISCO%'", "USD")
+    specSheet.Add "TATA", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%TATA%'", "USD")
+    specSheet.Add "BHARTI", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%BHARTI%' and [Address1] not like '%TELESONIC%'", "USD")
+    specSheet.Add "TELESONIC", Array("select * from [" & sourceSheetName & "$] where [Country] = 'IN' and [Account] not like '21705' and [Customer Name] like  '%BHARTI%' and [Address1] like '%TELESONIC%'", "USD")
     
 
     For Each i In specSheet
         'MsgBox "关键字: " & i & " 对应项 " & D.Item(i)
-        Call CopySheet(conn, specSheet.Item(i), headRange, i)
-        destSheetNames(destCount) = i
-        destCount = destCount + 1
+        Call CopySheet(conn, specSheet.Item(i)(0), headRange, i)
+        sheetDict(i) = specSheet.Item(i)(1)
     Next
-    
-    For Each i In specRate
-        sheetDict(i) = specRate.Item(i)
-    Next
-
+        
         
     conn.Close
 
     Set conn = Nothing
        
     
+    destSheetNames = sheetDict.keys()
     
     '处理各个目标表
-    For i = 0 To destCount - 1
+    For i = 0 To UBound(destSheetNames)
     
         Worksheets(destSheetNames(i)).Activate
         
@@ -755,7 +725,7 @@ Sub processAging()
             Call HandleINRUSD(destSheetNames(i), trxColumn, totalColumn, day361Column, sheetDict)
         End If
         
-        Call FormatSheet(destSheetNames(i))
+        Call FormatSheet(destSheetNames(i), totalColumn, day361Column)
         
     Next i
     
