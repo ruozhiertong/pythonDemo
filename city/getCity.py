@@ -265,7 +265,7 @@ def parse_html(url):
 		proxy_idx = random.randint(0,proxy_len -1) # 前后闭合[0,proxy_len-1]
 		proxies = {'http':'http://{}:{}'.format(proxy_urls[proxy_idx][0],proxy_urls[proxy_idx][1])}
 		print(proxies)
-		proxies = None
+		proxies = None # 如果需要代理IP，注释这行。 
 		t = threading.Thread(target=process_thread, args=("Thread-"+str(idx),idx,all_urls[idx],proxies))
 		t.start()
 		threads.append(t)

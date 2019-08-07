@@ -12,12 +12,12 @@ import openpyxl as xl
 from openpyxl.styles import Font
 import sys
 
-#sys.path.append('../email')
-#import sendmail
+sys.path.append('../email')
+import sendmail
 
 #两者都可以。上面是具体的模块。下面是以包形式的。
-sys.path.append('..')
-import email_package.sendmail
+# sys.path.append('..')
+# import email_package.sendmail
 
 #因为模块名比较长 ，可以as. 调用的时候 直接sm.sendMail 而不用 email_package.sendmail.senMail
 # import email_package.sendmail as sm
@@ -417,8 +417,9 @@ def old_http_main():
 
 	staticsShop_thread(china_city, shop_city)
 
-	#sendmail.sendEmail(["1043096262@qq.com"],'海底捞门店','test',['result.xlsx','static_data.txt'])
-	email_package.sendmail.sendEmail(email_list,'海底捞门店','Fighting',[execel_name])
+	#sendmail.sendEmail(["1043096262@qq.com"],'海底捞门店','Fighting',['result.xlsx','static_data.txt'])
+	sendmail.sendEmail(email_list,'海底捞门店','Fighting',[execel_name])
+	#email_package.sendmail.sendEmail(email_list,'海底捞门店','Fighting',[execel_name])
 
 
 
@@ -502,7 +503,8 @@ def new_https_main():
 	with open(data_name,"w+") as f:
 		f.write(json.dumps(result,ensure_ascii=False, indent=4, separators=(',', ': ')))
 
-	email_package.sendmail.sendEmail(email_list,'海底捞门店','Fighting',[execel_name])
+	#email_package.sendmail.sendEmail(email_list,'海底捞门店','Fighting',[execel_name])
+	sendmail.sendEmail(email_list,'海底捞门店','Fighting',[execel_name])
 
 
 
