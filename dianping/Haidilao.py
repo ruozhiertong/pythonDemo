@@ -34,7 +34,7 @@ haidilao_city_url = 'http://www.haidilao.com/js/kuCity.js?v=8'
 
 
 
-china_file = 'china.txt'
+china_file = 'china.dat'
 
 #注意这里全局list 如果要进行赋值的话， 最好设置成None。
 #如果 china_cities =[] ,然后 china_cities = json.load(text）这样直接赋值的话，只是局部的，不能作用到全局的这个变量

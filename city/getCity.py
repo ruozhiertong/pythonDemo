@@ -8,6 +8,13 @@ from bs4 import BeautifulSoup
 import threading
 import json
 import random
+import sys
+
+sys.path.append('../log')
+import log
+
+
+
 
 
 
@@ -16,18 +23,11 @@ origin_url = 'http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/' + str(year) +'/
 
 result_file = 'china.txt'
 
-proxy_file = 'ip_port.txt'
+proxy_file = 'ip_port.dat'
 
 end_level = 3 # 默认只要到县/区
 
 china = []
-
-
-'''错误信息'''
-def logInfo(msg,file_name="err.log"):
-	#追加模式。 读写(如果没有文件会自动创建)。
-	with open(file_name,'a+') as f:
-		f.write(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())) + '\t' + msg + '\n')
 
 
 def get_html(url,proxies=None):
@@ -70,7 +70,7 @@ def get_html(url,proxies=None):
 			flag = False
 		except Exception as e:
 			print(str(e) + ',' + url)
-			logInfo(str(e) + ',' + url)
+			log.logInfo(str(e) + ',' + url)
 			count += 1
 			#return None
 	if flag:
