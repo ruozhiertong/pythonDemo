@@ -15,6 +15,9 @@ import sys
 sys.path.append('../email')
 import sendmail
 
+sys.path.append('../log')
+import log
+
 #两者都可以。上面是具体的模块。下面是以包形式的。
 # sys.path.append('..')
 # import email_package.sendmail
@@ -134,12 +137,13 @@ def visit_cities(city_name,city,root_name):
 		
 		text = getHtmlAdvance(request_url ,header = header, method = 'POST', query_str = '', data = data)
 
+		if text is None:
+			return
+
+
 		json_data = json.loads(text)
-
 		#print(json_data)
-
 		shop_num = json_data.get('totalCount')
-
 		if shop_num != 0:
 			statics_data[root_name]['num'] += shop_num
 			statics_data[root_name]['city'].append({data['queryContent']: shop_num})
@@ -232,7 +236,21 @@ def getHtmlAdvance(url ,header = {}, method = 'GET', query_str = '', data = None
 		data = parse.urlencode(data).encode('utf-8')
 	req = request.Request(url , headers = header, data = data)
 
-	fUrl = request.urlopen(req)
+	flag = True
+	count = 0
+	fUrl = {}
+	while flag and count < 3:
+		try:
+			fUrl = request.urlopen(req,timeout = 15)
+			if fUrl.code == 200:
+				flag = False
+			count += 1
+		except Exception as e:
+			log.logInfo(str(e) + ',' + url)
+			count += 1
+	if flag:
+		return None
+
 	text_b = fUrl.read()
 	fUrl.close()
 
@@ -418,7 +436,7 @@ def old_http_main():
 	staticsShop_thread(china_city, shop_city)
 
 	#sendmail.sendEmail(["1043096262@qq.com"],'海底捞门店','Fighting',['result.xlsx','static_data.txt'])
-	sendmail.sendEmail(email_list,'海底捞门店','Fighting',[execel_name])
+	sendmail.sendEmail(email_list,'海底捞门店数据','Fighting',[execel_name])
 	#email_package.sendmail.sendEmail(email_list,'海底捞门店','Fighting',[execel_name])
 
 
