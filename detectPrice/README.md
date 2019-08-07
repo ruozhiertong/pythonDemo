@@ -12,7 +12,8 @@
 
 
 link:
-0.xpath: https://blog.csdn.net/weixin_43430036/article/details/84836516#_112
+0.xpath: XPath即为XML路径语言（XML Path Language），它是一种用来确定XML文档中某部分位置的语言.(百科)
+https://blog.csdn.net/weixin_43430036/article/details/84836516#_112
 1.xpath 选取包含多个class的元素，即class中含空格：
 		xpath=//div[@class='J-Ajax num ico-tag']
 		或者你也可以使用contains，像这样：xpath=//div[contains(@class , 'ico-tag')]
@@ -66,13 +67,23 @@ https://www.cnblogs.com/qq917937712/p/5761970.html
 AWS git上只拉取detectPrice目录，并且排除了detectPrice目录下的 *.txt和README.md。
 	见AWS .git/info/sparse-chekout 配置文件。
 
-11.linux/unix 
-	一般静态库 放在      /lib   /lib64   /usr/lib  				/usr/local/lib
-	一般程序动态库放在					   /usr/share				/usr/local/share
-	一般程序(可执行) 放在 /bin /sbin     /usr/bin  /usr/sbin 		/usr/local/bin /usr/local/sbin
+AWS 上做的修改，复原成gitHub上的： https://blog.csdn.net/haoaiqian/article/details/78284337
+
+11.linux/unix
+https://blog.csdn.net/sweetfather/article/details/79625482
+https://zhidao.baidu.com/question/263911682.html
+	一般静态库，动态库 放在      /lib   /lib64   /usr/lib  				/usr/local/lib
+	一般共享文件
+    (Architecture independent data files.不是动态库)
+                                            /usr/share				/usr/local/share
+	一般程序(二进制，可执行) 放在 /bin /sbin     /usr/bin  /usr/sbin 	/usr/local/bin /usr/local/sbin
 	一般程序源文件  放在     			  /usr/src   				/usr/local/src
 	一般程序源文件头文件				  /usr/include				/usr/local/include
 	一般程序配置文件		/etc  									/usr/local/etc     ~/.xxx
+
+查看一个命令/可执行程序的库 ldd chromedriver：
+https://blog.csdn.net/xiejinfeng850414/article/details/7843929
+
 
 12.ubuntu Python安装的模块在 ~/.local/lib/python2.7/site-packages/selenium
 
@@ -248,3 +259,40 @@ https://blog.csdn.net/example440982/article/details/69524347
 
 
 #python 是解释型脚本语言。 很多脚本语言如python定义变量时无需指定变量类型，直接 变量 = 值。 不像java c等 需要指定变量类型 int a = 10。
+
+
+
+python使用selenium
+
+正常情况下(先有了chrome/其他浏览器)：
+1.安装 python的selenium模块。 pip3 install selenium
+2.下载 安装驱动如chromedriver(和你的浏览器版本相匹配)。 到官网或镜像点下载相匹配的驱动 安装到/usr/bin （环境变量可以访问到的路径下，即命令行下直接使用chromedriver命令可用）. 
+3.使用 selenium 操作浏览器(可有头模式，也可无头模式)。 有头模式是显示浏览器界面的，无头模式是不显示浏览器界面的。
+
+
+在服务器Ubuntu python selenium 无头模式：
+https://blog.csdn.net/qq_29303759/article/details/83719285
+ubuntu selenium 使用无头模式：
+1.安装chromeDriver 在/usr/bin 下
+sudo wget http://npm.taobao.org/mirrors/chromedriver/73.0.3683.68/chromedriver_linux64.zip
+sudo unzip chromedriver_linux64.zip
+
+2. .py 代码中设置为无头模式。 除了这些设置外，其他和有头模式下的操作都一样。
+
+3. 仅仅有驱动还不够，可能还需要一些依赖。发现chromedriver: error while loading shared libraries: libnss3.so: cannot open shared object file。  
+安装libnss3 sudo apt-get install libnss3-dev
+
+4.以为只要安装驱动就能使用无头模式。 想当然了， 发现还是要安装chrome 程序 才行。selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary。 驱动还是要配合着浏览器使用才行。
+
+这个无界面的服务器使用selenium 也是一样的，只是只能使用的是无头模式,使用正常的有头会报错的。 比如在无界面的服务器中使用google chrome浏览器 ，(google-chrome:9450): Gtk-WARNING **: 04:14:05.978: cannot open display。 因为没有X server进行处理显示图形，仅仅只有x client(浏览器)是不行的。
+linux下图形界面是X Window， 因此仅仅有client(浏览器)是不行的，还需要Xserver。
+
+至于无头模式 能否做一些点击，扫码等相关的界面操作？ 
+无头模式可以做点击等和有头模式一样的操作。唯一不能实现的是需要手动操作界面的行为，因为无头模式下没有界面，所以无法进行任何的手动操作，如手动扫码，点击验证图片等。除此之外，任何在有头模式上的操作都可以用在无头模式上(如点击 填表单等)。
+
+在无界面的服务器运行selenium除了无头模式，也可以使用Xvfb (sudo apt-get install xvfb) + pyvirtualdisplay(pip3 install pyvirtualdisplay) 虚拟的GUI去执行selenium的有头模式
+https://www.cnblogs.com/bestruggle/p/8080983.html
+不过虚拟GUI缺点也和无头模式一样，对于界面的手动操作无能为力。
+
+至于远程服务器其实也是可以安装图形界面的。 而且也能通过远程访问到服务器端图形界面。你所需要做的就是在远程服务器上面安装X Window服务端和桌面环境，在客户机上安装X Window的客户端。 当我们访问远程时，界面由服务器的X服务端处理完后发送到客户机的客户端上显示。(可能会有疑问，远程服务器上有显卡吗？可以处理图形相关的操作吗？一般都是有显卡的，可以处理图形。就算没有显卡，cpu也是可以充当处理图形的作用的)
+
