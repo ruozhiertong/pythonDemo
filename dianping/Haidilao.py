@@ -1,12 +1,13 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
+import urllib
 from urllib import request
 from urllib import parse
 from urllib.request import urlopen
 import re
 import json
-import urllib
 import time
+import random
 import threading
 import openpyxl as xl
 from openpyxl.styles import Font
@@ -48,7 +49,7 @@ end_level = 2
 #https://www.haidilao.com/eportal/ui?moduleId=5&pageId=181bb70fe3cc4c2596b3d7415178b749&struts.portlet.action=/portlet/map-portlet!getMapDotDataByRegion.action&random=0.621823985892598
 #https://www.haidilao.com/eportal/ui?moduleId=5&pageId=181bb70fe3cc4c2596b3d7415178b749&struts.portlet.action=/portlet/map-portlet!getMapDotDataByRegion.action&random=0.12608788658106063
 #https://www.haidilao.com/eportal/ui?moduleId=5&pageId=181bb70fe3cc4c2596b3d7415178b749&struts.portlet.action=/portlet/map-portlet!getMapDotDataByRegion.action&random=0.640995342813512
-request_url = 'https://www.haidilao.com/eportal/ui?moduleId=5&pageId=181bb70fe3cc4c2596b3d7415178b749&struts.portlet.action=/portlet/map-portlet!getMapDotDataByRegion.action&random=0.640995342813512'
+url = 'https://www.haidilao.com/eportal/ui?moduleId=5&pageId=181bb70fe3cc4c2596b3d7415178b749&struts.portlet.action=/portlet/map-portlet!getMapDotDataByRegion.action'
 
 header = {
 		  	'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
@@ -67,7 +68,7 @@ header = {
 
 execel_name = 'Haidilao.xlsx'
 data_name = 'Haidilao.data'
-email_list = ["1043096262@qq.com",'songzehua2015@163.com']
+email_list = ['1043096262@qq.com','songzehua2015@163.com']
 
 city_num = 0
 statics_data = {} # {"福建":{"num":12,"city":[{"福州":10},{"厦门":10}]}}
@@ -135,6 +136,9 @@ def visit_cities(city_name,city,root_name):
 			data['queryContent'] = city['name']
 		print(data)
 		
+		request_url = url + '&random=' + str(random.random())
+
+		# print(request_url)
 		text = getHtmlAdvance(request_url ,header = header, method = 'POST', query_str = '', data = data)
 
 		if text is None:
@@ -522,7 +526,7 @@ def new_https_main():
 		f.write(json.dumps(result,ensure_ascii=False, indent=4, separators=(',', ': ')))
 
 	#email_package.sendmail.sendEmail(email_list,'海底捞门店','Fighting',[execel_name])
-	sendmail.sendEmail(email_list,'海底捞门店','Fighting',[execel_name])
+	sendmail.sendEmail(email_list,'海底捞门店数据','Fighting',[execel_name])
 
 
 
