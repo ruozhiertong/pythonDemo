@@ -46,6 +46,16 @@ china_cities = None
 #查询到市级别
 end_level = 2
 
+# accept: text/plain, */*; q=0.01
+# accept-encoding: gzip, deflate, br
+# accept-language: zh-CN,zh;q=0.9,en;q=0.8
+# easysitetoken: 
+# origin: https://www.haidilao.com
+# referer: https://www.haidilao.com/en/fwzx/mdss/index.html
+# request-by: ajax-request-tag
+# user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36
+# x-requested-with: XMLHttpRequest
+#https://www.haidilao.com/eportal/ui?moduleId=5&pageId=9c8cf76c4ca84fc686ca11aaa936f5c7&struts.portlet.action=/portlet/map-portlet!getMapDotDataByRegion.action&random=0.5606347888283192
 #https://www.haidilao.com/eportal/ui?moduleId=5&pageId=181bb70fe3cc4c2596b3d7415178b749&struts.portlet.action=/portlet/map-portlet!getMapDotDataByRegion.action&random=0.621823985892598
 #https://www.haidilao.com/eportal/ui?moduleId=5&pageId=181bb70fe3cc4c2596b3d7415178b749&struts.portlet.action=/portlet/map-portlet!getMapDotDataByRegion.action&random=0.12608788658106063
 #https://www.haidilao.com/eportal/ui?moduleId=5&pageId=181bb70fe3cc4c2596b3d7415178b749&struts.portlet.action=/portlet/map-portlet!getMapDotDataByRegion.action&random=0.640995342813512
@@ -55,7 +65,14 @@ header = {
 		  	'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
 			'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
 			'origin': 'https://www.haidilao.com',
-		  	'referer': 'https://www.haidilao.com/zh/fwzx/mdss/index.html'
+		  	'referer': 'https://www.haidilao.com/en/fwzx/mdss/index.html',
+		  	'x-requested-with': 'XMLHttpRequest',
+		  	'request-by': 'ajax-request-tag',
+		  	'asysiteparamkey':'', 
+			'easysitetoken': '',
+			'accept': 'text/plain, */*; q=0.01',
+			'accept-encoding': 'gzip, deflate, br',
+			'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8'
 		  	}
 
 
