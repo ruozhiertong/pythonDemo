@@ -43,9 +43,11 @@ def process():
             break
         #resize
         frame=cv2.resize(frame,(width,height),interpolation=cv2.INTER_AREA)
-        #二值化
+        #灰度
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        picImage = Image.fromarray(gray,"1")
+        #二值化
+        ret,picImage = cv2.threshold(gray,127,255,cv2.THRESH_BINARY)
+        picImage = Image.fromarray(picImage,"1")
         disp.image(picImage)
         disp.display()
     cap.release()
