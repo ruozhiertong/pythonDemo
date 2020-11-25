@@ -9,3 +9,15 @@ def logInfo(msg,file_name="err.log"):
 	#追加模式。 读写(如果没有文件会自动创建)。
 	with open(file_name,'a+') as f:
 		f.write(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())) + '\t' + msg + '\n')
+
+
+def testFun():
+	print("testFun")
+
+
+class Complex:
+	def __init__(self, realpart, imagpart):
+		self.r = realpart
+		self.i = imagpart
+	def printComplex(self):
+		print(self.r,"+",self.i,"i")
