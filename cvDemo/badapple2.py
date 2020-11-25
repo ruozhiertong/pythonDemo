@@ -96,9 +96,9 @@ def process_bin():
     document.close()
 
 
-#不知道为什么显示混乱. 因为在frombytes出错了。
+#不知道为什么显示混乱. 因为在frombytes出错了。具体用哪种模式要看数据的类型。
 def process_bin2():
-    pic = np.zeros((height,width))
+    pic = np.zeros((height,width)，np.uint8) #确定数据类型为8位/1字节。 为了后续frombytes解析的时候做准备，不然解析有可能错误的。
     document = open(filepath, "rb") #二进制读写.可以在Arduino的oled上直接使用
     size = os.path.getsize(filepath)  #获得文件大小
     r = 0
@@ -119,6 +119,10 @@ def process_bin2():
             r = 0
             c = 0
             #picImage = Image.fromarray(pic,"1")
+            #picImage = Image.frombytes("I",(128,64),pic.tobytes())
+            #用8位 L 的也不行。 很奇怪。 8位／1字节表一个像素。难道pic中不是？很奇怪
+            # pic[r][c]中还真不是，是float。type(pic[0][0]) => <class 'numpy.float64'>
+            # 所以要在pic定义的时候，确定其数据类型，确定为1字节。
             picImage = Image.frombytes("L",(128,64),pic.tobytes())
             #picImage.show()
             disp.image(picImage.convert("1"))
