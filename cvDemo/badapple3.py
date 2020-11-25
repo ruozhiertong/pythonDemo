@@ -65,7 +65,7 @@ def process():
         # 而如果用"1",就是一位表示一个像素。 这里gray 或picImage 是8位表示一个像素的，因此用L。
         picImage = Image.frombytes("L", (128,64), gray.tobytes())
         #picImage.show()
-        disp.image(picImage)
+        disp.image(picImage.convert("1"))
         disp.display()
     cap.release()
 
