@@ -34,6 +34,8 @@ def main():
          sys.exit()
     start = time.time()
     image = Image.open(sys.argv[1]).convert('1')
+    disp.image(image)
+    disp.display()
     end = time.time()
     print(end - start)
 if __name__ == "__main__":
