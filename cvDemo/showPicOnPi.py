@@ -30,7 +30,7 @@ height = disp.height #64
 
 def main():
     print(sys.argv)
-    if(sys.argv.size() == 1):
+    if(len(sys.argv) == 1):
          sys.exit()
     start = time.time()
     image = Image.open(sys.argv[1]).convert('1')

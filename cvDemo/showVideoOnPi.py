@@ -61,7 +61,7 @@ def process(filepath,disp,width,height,x=0,y=0):
 
 def main():
     print(sys.argv)
-    if(sys.argv.size() == 1):
+    if(len(sys.argv) == 1):
          sys.exit()
     start = time.time()
     disp = initSSD1306()
