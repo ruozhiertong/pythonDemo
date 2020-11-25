@@ -33,7 +33,7 @@ def main():
     if(len(sys.argv) == 1):
          sys.exit()
     start = time.time()
-    image = Image.open(sys.argv[1]).convert('1')
+    image = Image.open(sys.argv[1]).resize((width, height)).convert('1')
     disp.image(image)
     disp.display()
     end = time.time()
