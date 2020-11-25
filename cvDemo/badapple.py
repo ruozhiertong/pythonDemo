@@ -22,7 +22,7 @@ disp.clear()
 disp.display()
 start = time.time()
 for I_image in range(0,1000):
-    image = Image.open('badapple_'+str(I_image)+'.jpg').convert('1')
+    image = Image.open('resource/badapple_'+str(I_image)+'.jpg').convert('1')
     disp.image(image)
     disp.display()
 end = time.time()

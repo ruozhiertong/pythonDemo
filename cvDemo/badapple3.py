@@ -53,9 +53,7 @@ def process():
 
 def main():
     start = time.time()
-    #process_bin()
-    #process_bin2()
-    process_bin3()
+    process()
     end = time.time()
     print(end - start)
 if __name__ == "__main__":

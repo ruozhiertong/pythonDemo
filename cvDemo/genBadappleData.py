@@ -49,8 +49,8 @@ while(success):
     #image.shape = (480,640,3)
     #print(frame.shape)
     if success:
-        cv2.imshow('frame', frame)
-        cv2.waitKey(1) 
+        #cv2.imshow('frame', frame)
+        #cv2.waitKey(1) 
         #resize
         frame=cv2.resize(frame,(OLED_WIDTH,OLED_HEIGHT),interpolation=cv2.INTER_AREA)
         cv2.imwrite("resource/badapple_" + str(frame_count)+ ".jpg", frame)  #生成图片。
