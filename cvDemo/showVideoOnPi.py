@@ -25,7 +25,7 @@ def initSSD1306():
     # draw = ImageDraw.Draw(image)
     return disp
 
-def process(filepath,width,height,x=0,y=0):
+def process(filepath,disp,width,height,x=0,y=0):
     cap = cv2.VideoCapture(filepath)
     #处理每一帧
     while(True):
@@ -65,7 +65,7 @@ def main():
          sys.exit()
     start = time.time()
     disp = initSSD1306()
-    process(sys.argv[1],disp.width, disp.height)
+    process(sys.argv[1], disp ,disp.width, disp.height)
     end = time.time()
     print(end - start)
 if __name__ == "__main__":
