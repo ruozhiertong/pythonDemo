@@ -107,7 +107,6 @@ def process_bin2():
     for x in range(size):
         a = document.read(1) # each byte.
         a = struct.unpack('B', a)[0]
-        dataTable += a.to_bytes(1,'big')
         for i in range(7,-1,-1):
             if(get_bit_val(a,i) == 1):
                 pic[r][c%width] = 255
@@ -120,9 +119,9 @@ def process_bin2():
             r = 0
             c = 0
             #picImage = Image.fromarray(pic,"1")
-            picImage = Image.frombytes("L",(128,64),pic.tobtytes())
+            picImage = Image.frombytes("L",(128,64),pic.tobytes())
             #picImage.show()
-            disp.image(picImage)
+            disp.image(picImage.convert("1"))
             disp.display()
     document.close()
 
