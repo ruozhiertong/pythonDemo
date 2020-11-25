@@ -8,7 +8,7 @@ from PIL import ImageDraw
 from PIL import ImageFont
 import time  # 引入time模块
 import cv2
-#import Adafruit_SSD1306
+import Adafruit_SSD1306
 
 
 # 直接使用opencv 处理视频，在此基础上 直接显示图片，从而播放。

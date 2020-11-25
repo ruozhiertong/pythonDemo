@@ -96,7 +96,7 @@ def process_bin():
     document.close()
 
 
-#不知道为什么显示混乱
+#不知道为什么显示混乱. 因为在frombytes出错了。
 def process_bin2():
     pic = np.zeros((height,width))
     document = open(filepath, "rb") #二进制读写.可以在Arduino的oled上直接使用
@@ -119,7 +119,8 @@ def process_bin2():
         if(r == height):
             r = 0
             c = 0
-            picImage = Image.fromarray(pic,"1")
+            #picImage = Image.fromarray(pic,"1")
+            picImage = Image.frombytes("L",(128,64),pic.tobtytes())
             #picImage.show()
             disp.image(picImage)
             disp.display()
