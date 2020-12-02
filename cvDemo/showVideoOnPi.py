@@ -37,7 +37,7 @@ class OLEDPlayer(object):
         if(width == 0):
             width = self.disp.width
         if(height == 0):
-            self.height = self.disp.height
+            height = self.disp.height
 
 
         cap = cv2.VideoCapture(filepath)
