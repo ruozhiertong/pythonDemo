@@ -10,32 +10,48 @@ import Adafruit_SSD1306
 # 直接使用opencv 处理视频，在此基础上 直接显示图片，从而播放。
 
 
-#Raspberry Pi pin configuration:
-RST = None     # on the PiOLED this pin isnt used
-disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST, i2c_address=0x3C)
+class PICShow():
+    """docstring for PICShow"""
+    def __init__(self):
+        #Raspberry Pi pin configuration:
+        RST = None     # on the PiOLED this pin isnt used
+        disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST, i2c_address=0x3C)
 
-# Initialize library.
-disp.begin()
+        # Initialize library.
+        disp.begin()
 
-# Clear display.
-disp.clear()
-disp.display()
-# Create blank image for drawing.
-# Make sure to create image with mode '1' for 1-bit color.
-width = disp.width #128
-height = disp.height #64
-# image = Image.new('1', (width, height)) #创建一个图片
-# Get drawing object to draw on image.
-# draw = ImageDraw.Draw(image)
+        # Clear display.
+        disp.clear()
+        disp.display()
+        # Create blank image for drawing.
+        # Make sure to create image with mode '1' for 1-bit color.
+        width = disp.width #128
+        height = disp.height #64
+        # image = Image.new('1', (width, height)) #创建一个图片
+        # Get drawing object to draw on image.
+        # draw = ImageDraw.Draw(image)
+        self.disp = disp
+
+    def showViaPath(self, filePath, width = 0, height = 0, x = 0, y =0):
+        image = Image.open(sys.argv[1]).resize((width, height)).convert('1')
+        self.showViaImage(image, width, height, x, y)
+
+    def showViaImage(self, image, width = 0, height = 0, x = 0, y =0):
+        if(width == 0):
+            width = self.disp.width
+        if(height == 0):
+            height = self.disp.height
+        #这个图片只能是充满这个那个屏幕的。
+        disp.image(image)
+        disp.display()
 
 def main():
     print(sys.argv)
     if(len(sys.argv) == 1):
          sys.exit()
     start = time.time()
-    image = Image.open(sys.argv[1]).resize((width, height)).convert('1')
-    disp.image(image)
-    disp.display()
+    pICShow = PICShow()
+    pICShow.showViaPath(sys.argv[1])
     end = time.time()
     print(end - start)
 if __name__ == "__main__":
