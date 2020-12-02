@@ -9,10 +9,8 @@ import Adafruit_SSD1306
 
 
 class OLEDPlayer(object):
-    """docstring for OLEDPlayer"""
-    def __init__(self):
-        self.disp = __initSSD1306__()
 
+    
     def __initSSD1306__():
         #Raspberry Pi pin configuration:
         RST = None     # on the PiOLED this pin isnt used
@@ -31,6 +29,9 @@ class OLEDPlayer(object):
         # draw = ImageDraw.Draw(image)
         return disp
     
+    """docstring for OLEDPlayer"""
+    def __init__(self):
+        self.disp = __initSSD1306__()
 
     def play(self,filepath,width = 0, height =0, x =0, y =0):
         if(width == 0):
