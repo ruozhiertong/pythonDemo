@@ -33,7 +33,7 @@ class PICShow():
         self.disp = disp
 
     def showViaPath(self, filePath, width = 0, height = 0, x = 0, y =0):
-        image = Image.open(sys.argv[1]).resize((width, height)).convert('1')
+        image = Image.open(sys.argv[1])
         self.showViaImage(image, width, height, x, y)
 
     def showViaImage(self, image, width = 0, height = 0, x = 0, y =0):
@@ -42,7 +42,7 @@ class PICShow():
         if(height == 0):
             height = self.disp.height
         #这个图片只能是充满这个那个屏幕的。
-        disp.image(image)
+        disp.image(image.resize((width, height)).convert('1'))
         disp.display()
 
 def main():
