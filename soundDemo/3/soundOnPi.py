@@ -15,7 +15,7 @@ pICShow = showPicOnPi.PICShow()
 
 
 p = pyaudio.PyAudio()
-sound = AudioSegment.from_file(file='1.wav')
+sound = AudioSegment.from_file(file='../2/1.wav')
 left = sound.split_to_mono()[0] # 单身道。 mono单声道。
 fs = left.frame_rate
 size = len(left.get_array_of_samples())
