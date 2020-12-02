@@ -7,8 +7,8 @@ filepath = "resource/badapple.mp4"
 
 def main():
     start = time.time()
-    disp = showVideoOnPi.initSSD1306()
-    showVideoOnPi.process(filepath,disp ,disp.width, disp.height)
+    oledPlayer = showVideoOnPi.OLEDPlayer()
+    oledPlayer.process(filepath)
     end = time.time()
     print(end - start)
 if __name__ == "__main__":
