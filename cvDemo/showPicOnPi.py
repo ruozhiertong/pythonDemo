@@ -42,8 +42,8 @@ class PICShow():
         if(height == 0):
             height = self.disp.height
         #这个图片只能是充满这个那个屏幕的。
-        disp.image(image.resize((width, height)).convert('1'))
-        disp.display()
+        self.disp.image(image.resize((width, height)).convert('1'))
+        self.disp.display()
 
 def main():
     print(sys.argv)
