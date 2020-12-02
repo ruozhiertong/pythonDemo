@@ -77,7 +77,7 @@ def main():
          sys.exit()
     start = time.time()
     oledPlayer = OLEDPlayer()
-    oledPlayer.process(sys.argv[1])
+    oledPlayer.play(sys.argv[1])
     end = time.time()
     print(end - start)
 if __name__ == "__main__":
