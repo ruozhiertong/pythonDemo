@@ -275,12 +275,86 @@ def parse_html(url):
 	for t in threads:
 		t.join()
 
+#获取行政区编码。
+def simpleGetData():
+	# 这个知道县为止。
+	simpleData_url = "http://www.mca.gov.cn/article/sj/xzqh/2020/2020/2020112010001.html"
+	response = urlopen(simpleData_url)
+	print("code:" + str(response.code))
+	if response.code == 200:
+		text_b = response.read() 
+		with open("simpleData_raw.dat", "wb") as code:
+			code.write(text_b)
+		#print(data)
+		#process raw data
+		charset = 'utf-8'
+		index = text_b.find("charset".encode())
+		if "GBK".encode() in text_b[index:index + 30] or "gbk".encode() in text_b[index:index + 30]:
+			charset = 'gbk'
+		elif "utf-8".encode() in text_b[index:index + 30] or "UTF-8".encode() in text_b[index:index + 30]:
+			charset = 'utf-8'
+		elif 'gb2312'.encode() in text_b[index:index + 30] or 'GB2312'.encode() in text_b[index:index + 30]:
+			charset ='gb2312'
+		city_dict = {}
+		text = text_b.decode(charset,'ignore')
+		soup = BeautifulSoup(text,'html.parser')
+		trs = soup.findAll(name = 'tr')
+		for tr_idx, tr in enumerate(trs):
+			if tr_idx == 0 or tr_idx == 1 or tr_idx == 2:
+				continue;
+			tds = tr.findChildren(recursive=False) # 没有False 还会搜索到孙子
+			if(len(tds) < 3):
+				continue
+			#只取 第2 3 个td。 
+			# print(tds[1])
+			# print(tds[2])
+			# print(tds[1].text)
+			# print(tds[2].text)
+			#soup会将<span>标签的内容也作为父标签<td>的内容.所以删除它。
+			span_tag = tds[1].find() #有的没有span
+			if(span_tag != None):
+				key = tds[1].text.lstrip(span_tag.text)
+			else:
+				key = tds[1].text
+			span_tag = tds[2].find()
+			if(span_tag != None):
+				value = tds[2].text.lstrip(span_tag.text)
+			else:
+				value = tds[2].text
+
+			if key != '':
+				city_dict[key] = value
+
+		with open("simpleData.dat","w") as f:
+			#f.write(str(city_dict)) #格式不好看。
+			f.write(json.dumps(city_dict,ensure_ascii=False, indent=4, separators=(',', ': ')))
+	response.close()
+
+#获取天气预报 的城市编码。
+# 在 http://www.weather.com.cn/ 首页的 源码中可以找到相关的数据。 
+#<script type="text/javascript" src="https://j.i8tq.com/weather2020/search/city.js"></script>
+#也可以在开发者工具的sources中j.i8tq.com->weather2020->search->city.js 查看具体内容。
+def getWeatherCityCode():
+	weather_city_url = "https://j.i8tq.com/weather2020/search/city.js"
+	response = urlopen(weather_city_url)
+	print("code:" + str(response.code))
+	if response.code == 200:
+		text_b = response.read() # 是js 形式的 var city_data = {...},只要json格式
+		index = text_b.find("{".encode())
+		with open("weather_city_code.dat", "wb") as code:
+			code.write(text_b[index:])
+	response.close()
+
 def main():
 	parse_html(origin_url)
 
 	with open(result_file,'w+') as f:
 		f.write(json.dumps(china,ensure_ascii=False, indent=4, separators=(',', ': ')))
 		#f.writ(china)
+
+	# simpleGetData()
+
+	# getWeatherCityCode()
 
 
 if __name__ == '__main__':
