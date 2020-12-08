@@ -40,7 +40,7 @@ def update(frames):
     if stream.is_active():
         slice = left.get_sample_slice(frames, frames + window)
         stream.write(slice.raw_data)
-        y = np.array(slice.get_array_of_samples()) / 30000
+        y = np.array(slice.get_array_of_samples()) / 20000
         points = np.array([time, y]).T.reshape(-1, 1, 2)  # 可以使用三角函数来实现多重曲线重叠效果，y 控制曲线振幅
         segments = np.concatenate([points[:-1], points[1:]], axis=1)
         lc.set_segments(segments)

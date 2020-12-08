@@ -1,7 +1,7 @@
 #! encoding: UTF-8
 import os
 import cv2
-video_full_path = "541-badapple-256*128.mp4"
+video_full_path = "resource/badapple.mp4"
 #video_full_path = "541-badapple.mp4"
 cap = cv2.VideoCapture(video_full_path)
 # 获取视频帧的宽

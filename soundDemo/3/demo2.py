@@ -33,27 +33,29 @@ ax2.set_ylim(-15, 15)
 ax1.set_axis_off()
 ax2.set_axis_off()
 window = int(0.02*fs) # 20ms
-f = np.linspace(20, 20*1000, window // 2)
+f = np.linspace(0, 2000, window//2)
 t = np.linspace(0, 20, window)
-lf1, = ax1.plot(f, np.zeros(window // 2), lw=1)
+lf1, = ax1.plot(f, np.zeros(window//2), lw=1)
 lf2, = ax2.plot(t, np.zeros(window), lw=1)
  
  
 def update(frames):
     if stream.is_active():
-        print(time.time())
+        #print(time.time())
         slice = left.get_sample_slice(frames, frames + window)
         data = slice.raw_data
-        stream.write(data)
-        y = np.array(slice.get_array_of_samples()) / 30000 # 归一化
-        yft = np.abs(np.fft.fft(y)) / (window // 2)
- 
-        lf1.set_ydata(yft[:window // 2])
+        stream.write(data)  # 播放流
+        y = np.array(slice.get_array_of_samples())/(3000) #/ 10000 # 归一化 可调整。 时域
+        print(len(y))
+        yft = np.abs(np.fft.fft(y)) /(window) #傅立叶变换。 频域。
+        print(len(yft))
+        time.sleep(3)
+        lf1.set_ydata(yft[:window//2])
         lf2.set_ydata(y)
 
 
     return lf1, lf2,
  
  
-ani = FuncAnimation(fig, update, frames=range(0, size, window), interval=0, blit=True)
+ani = FuncAnimation(fig, update, frames=range(0, size, window), interval=1, blit=True)
 plt.show()

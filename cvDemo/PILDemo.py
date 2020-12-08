@@ -1,6 +1,6 @@
 # 图片二值化
 from PIL import Image
-img = Image.open('1.png')
+img = Image.open('resource/1.png')
  
 # 模式L”为灰色图像，它的每个像素用8个bit表示，0表示黑，255表示白，其他数字表示不同的灰度。
 Img = img.convert('L')

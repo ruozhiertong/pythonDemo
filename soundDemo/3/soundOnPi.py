@@ -3,14 +3,14 @@ import pyaudio
 from pydub import AudioSegment, effects
 import matplotlib.pyplot as plt
 from PIL import Image
-import sys
-sys.path.append("..")
-# import ../cvDemo    # wrong
-# import cvDemo／showPicOnPi # wrong
-# from cvDemo import showPicOnPi 
-import cvDemo.showPicOnPi as showPicOnPi
-
-pICShow = showPicOnPi.PICShow()
+# import sys
+# sys.path.append("..")
+# # import ../cvDemo    # wrong
+# # import cvDemo／showPicOnPi # wrong
+# # from cvDemo import showPicOnPi
+# import cvDemo.showPicOnPi as showPicOnPi
+#
+# pICShow = showPicOnPi.PICShow()
 
 
 
@@ -65,8 +65,8 @@ while stream.is_active():
     # 得到 Image RGBA图像对象 (需要Image对象的同学到此为止就可以了)
     image = Image.frombytes("RGBA", (w, h), buf.tostring())
     image = image.resize((128, 64),Image.ANTIALIAS)
-    #image.show()
-    pICShow.showViaImage(image)
+    image.show()
+    #pICShow.showViaImage(image)
 
     frames +=window
 

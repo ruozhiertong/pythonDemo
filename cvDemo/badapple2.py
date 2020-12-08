@@ -98,7 +98,7 @@ def process_bin():
 
 #不知道为什么显示混乱. 因为在frombytes出错了。具体用哪种模式要看数据的类型。
 def process_bin2():
-    pic = np.zeros((height,width),np.uint8) #确定数据类型为8位/1字节。 为了后续frombytes解析的时候做准备，不然解析有可能错误的。
+    pic = np.zeros((height,width),np.uint8) #确定数据类型为8位/1字节。(因为无法直接操作1bit的，所以用8bit，所以后续Image.frombytes用"L" 而不是"1") 为了后续frombytes解析的时候做准备，不然解析有可能错误的。
     document = open(filepath, "rb") #二进制读写.可以在Arduino的oled上直接使用
     size = os.path.getsize(filepath)  #获得文件大小
     r = 0
