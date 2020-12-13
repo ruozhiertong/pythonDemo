@@ -8,7 +8,7 @@ import time
 # ref: https://www.cnblogs.com/darkchii/p/11827461.html
 
 p = pyaudio.PyAudio()
-sound = AudioSegment.from_file(file='../2/1.wav')
+sound = AudioSegment.from_file(file='../1/Fenn.mp3')
 left = sound.split_to_mono()[0] # 单身道。 mono单声道。
 fs = left.frame_rate
 size = len(left.get_array_of_samples())
