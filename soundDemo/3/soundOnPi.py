@@ -36,11 +36,12 @@ stream = p.open(
 )
  
 stream.start_stream()
-fig = plt.figure()
+fig = plt.figure(facecolor="black")
 ax1,ax2 = fig.subplots(2,1)
-# ax1.set_axis_off()
+ax1.set_axis_off()
+ax2.set_axis_off()
 
-time_spacing = 0.02
+time_spacing = 0.2
 window = int(time_spacing*fs) # 0.2 较为流畅。取200ms。
 t = np.linspace(0, time_spacing, window) # 200ms
 lf1, = ax1.plot(t, np.zeros(window), lw=1)
