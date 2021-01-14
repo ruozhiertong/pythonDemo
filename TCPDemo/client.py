@@ -8,6 +8,9 @@ PORT = 12900
 BUFSIZ = 1024
 ADDRESS = (HOST, PORT)
 
+#python的socket编程 流程和C基本一致。 
+
+
 tcpClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcpClientSocket.connect(ADDRESS)
 

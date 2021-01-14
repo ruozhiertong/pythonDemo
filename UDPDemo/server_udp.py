@@ -7,10 +7,14 @@ fileName = "../TCPDemo/data.mp4"
 BUFSIZ = 1024 * 5
 
 count = 0 #发送次数
-# server.settimeout(5) #设置超时
+server.settimeout(20) #设置超时
 # 接收客户端。会一直阻塞。 可以设置超时。
-msg, addr = server.recvfrom(1024)
-print(msg, addr)
+try:
+	msg, addr = server.recvfrom(1024)
+	print(msg, addr)
+except Exception as e:
+	print("timeout")
+
 with open(fileName, "rb") as f:
     sendData = f.read(BUFSIZ)  # 10k
     while len(sendData) != 0:  # ==0 时结束文件读取。

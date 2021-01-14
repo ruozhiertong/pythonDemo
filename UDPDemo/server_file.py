@@ -14,7 +14,7 @@ msg, addr = server.recvfrom(1024)
 print(msg, addr)
 with open(fileName, "rb") as f:
     sendData = f.read(BUFSIZ)  # 10k
-    while len(sendData) != 0:  # ==0 时结束文件读取。
+    while len(sendData) != 0 and count < 10:  # ==0 时结束文件读取。
         count += 1
         server.sendto(sendData, addr)
         print(count, len(sendData))
@@ -22,5 +22,5 @@ with open(fileName, "rb") as f:
 
 # 告诉客户端结束了。否则客客户端会傻傻等待 recvfrom。 因为不像TCP那样可以有close，所以这里自己send一个空的过去
 count +=1
-server.sendto(sendData,addr) # server.sendto(b'',addr)
+server.sendto(b'',addr) #server.sendto(sendData,addr)
 print(count) # 包含最后一个空包/结束包。
